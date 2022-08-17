@@ -1,27 +1,33 @@
 // import logo from './logo.svg';
 // import './App.css';
-import About from './conteinars/About/About';
-import Appoiment from './conteinars/Appointment/Appoiment';
-import Contact from './conteinars/Contact/Contact';
+
 import Departments from './conteinars/Departments/Departments';
-import Doctors from './conteinars/Doctors/Doctors';
+
 import Home from './conteinars/Home/Home';
-import Footer from './Footer/Footer';
+import About from './conteinars/About/About';
+import Doctors from './conteinars/Doctors/Doctors';
+import contact from './conteinars/Contact/Contact';
+import Appoiment from './conteinars/Appointment/Appoiment';
+import { Route,Switch} from 'react-router-dom';
 import Header from './Header/Header';
+import Footer from './Footer/Footer';
+
 
 function App() {
   return (
       
-      <>
-         <Header />
-        {/* <Home /> */}
-        {/* <About/> */}
-        {/* <Doctors/> */}
-        {/* <Departments/> */}
-        {/* <Appoiment/> */}
-        <Contact/>
-         <Footer />
-      </>
+      <div>
+        <Header />
+        <Switch>
+          <Route exact path={"/"} component={Home}/>
+          <Route exact path={"/Departments"} component={Departments}/>
+          <Route exact path={"/About"} component={About}/>
+          <Route exact path={"/Doctors"} component={Doctors}/>
+          <Route exact path={"/Contact"} component={contact}/>
+          <Route exact path={"/Appointment"} component={Appoiment} />
+        </Switch>
+        <Footer />
+      </div>
       
   );
 }
