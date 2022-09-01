@@ -11,6 +11,7 @@ import Appoiment from './conteinars/Appointment/Appoiment';
 import { Route,Switch} from 'react-router-dom';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
+import Auth from './conteinars/Auth/Auth';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route exact path={"/Doctors"} component={Doctors}/>
           <Route exact path={"/Contact"} component={contact}/>
           <Route exact path={"/Appointment"} component={Appoiment} />
+          <Route exact path={"/Auth"} component={Auth} />
         </Switch>
         <Footer />
       </div>
