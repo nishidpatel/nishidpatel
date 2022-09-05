@@ -31,6 +31,7 @@ function Header(props) {
           <li><NavLink className="nav-link scrollto active" to={"/"}>Home</NavLink></li>
           <li><NavLink className="nav-link scrollto" to={"/Dnpepartments"}>Departments</NavLink></li>
           <li><NavLink className="nav-link scrollto" to={"/Doctors"}>Doctors</NavLink></li>
+          <li><NavLink className="nav-link scrollto" to={"/Medicine"}>Medicine</NavLink></li>
           <li><NavLink className="nav-link scrollto " to={"/About"}>About</NavLink></li>
           <li><NavLink className="nav-link scrollto" to={"/Contact"}>Contact</NavLink></li>
         </ul>

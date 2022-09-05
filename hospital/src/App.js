@@ -12,6 +12,7 @@ import { Route,Switch} from 'react-router-dom';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Auth from './conteinars/Auth/Auth';
+import Medicine from './conteinars/Medicine/Medicine';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route exact path={"/Departments"} component={Departments}/>
           <Route exact path={"/About"} component={About}/>
           <Route exact path={"/Doctors"} component={Doctors}/>
+          <Route exact path={"/Medicine"} component={Medicine}/>
           <Route exact path={"/Contact"} component={contact}/>
           <Route exact path={"/Appointment"} component={Appoiment} />
           <Route exact path={"/Auth"} component={Auth} />
