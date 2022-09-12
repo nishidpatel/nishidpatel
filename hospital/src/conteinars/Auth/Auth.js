@@ -16,6 +16,31 @@ function Auth(props) {
         console.log(emailRef.current.value);
     }
 
+    function handelon() {
+        nameRef.current.focus();
+        nameRef.current.style.border = '2px solid blue'
+    }
+
+    let authschema;
+    let schema = yup.object().shape(authschema);
+    if (userType === 'singup' && 'reset') {
+        authschema = {
+            name: yup.string().required("please Enter your name"),
+            email: yup.string().required("please Enter valid email").email("please Enter email"),
+            pssword: yup.string().required("Enter your pssword").min(8)
+        }
+
+    } else if (userType === 'login') {
+        authschema = {
+            email: yup.string().required("please Enter valid email").email("please Enter email"),
+            pssword: yup.string().required("Enter your pssword").min(8),
+        }
+    } else if (userType === 'true') {
+        authschema = {
+            email: yup.string().required("please Enter valid email").email("please Enter email"),
+        }
+    }
+
 
     return (
         <section id="appointment" className="appointment">
