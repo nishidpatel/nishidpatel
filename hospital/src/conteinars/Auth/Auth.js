@@ -65,7 +65,7 @@ function Auth(props) {
         initialValues: init,
         validationSchema: schema,
         onSubmit: values => {
-
+v 
             console.log(values);
 
         },
