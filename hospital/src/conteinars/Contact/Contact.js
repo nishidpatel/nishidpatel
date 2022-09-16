@@ -37,7 +37,7 @@ function Contact(props) {
     },
 });
 
-const { handleChange, errors, handleSubmit } = formik;
+const { handleChange, errors, handleSubmit, touched, handleBlur } = formik;
 
     return (
         <div>
@@ -73,7 +73,7 @@ const { handleChange, errors, handleSubmit } = formik;
       </div>
       <Formik>
       <div className="col-lg-8 mt-5 mt-lg-0">
-        <Form action method="post" role="form" className="php-email-form">
+        <Form onSubmit={handleSubmit} action method="post" role="form" className="php-email-form">
           <div className="row">
             <div className="col-md-6 form-group">
               <input 
@@ -83,8 +83,9 @@ const { handleChange, errors, handleSubmit } = formik;
               id="name" 
               placeholder="Your Name" 
               required 
+              onBlur={handleBlur}
               onChange={handleChange}/>
-              <p>{errors.name}</p>
+              <p>{errors.name && touched.name ? errors.name : ''}</p>
 
             </div>
 
@@ -96,9 +97,10 @@ const { handleChange, errors, handleSubmit } = formik;
               id="email" 
               placeholder="Your Email" 
               required 
+              onBlur={handleBlur}
               onChange={handleChange}
               />
-              <p>{errors.email}</p>
+              <p>{errors.email && touched.email ? errors.email : ''}</p>
 
             </div>
           </div>
@@ -111,14 +113,15 @@ const { handleChange, errors, handleSubmit } = formik;
              id="subject" 
              placeholder="Subject" 
              required 
+             onBlur={handleBlur}
              onChange={handleChange}
              />
-             <p>{errors.subject}</p>
+             <p>{errors.subject && touched.subject ? errors.subject : ''}</p>
 
           </div>
           <div className="form-group mt-3">
-            <textarea className="form-control" name="message" rows={5} placeholder="Message" required defaultValue={""} onChange={handleChange}/>
-            <p>{errors.message}</p>
+            <textarea className="form-control" name="message" rows={5} placeholder="Message" required defaultValue={""} onChange={handleChange}  onBlur={handleBlur}/>
+            <p>{errors.message && touched.message ? errors.message : ''}</p>
 
           </div>
           <div className="my-3">

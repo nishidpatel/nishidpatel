@@ -12,7 +12,7 @@ function Appoiment(props) {
     name: yup.string().required("please Enter your name"),
     email: yup.string().required("please Enter valid email").email("please Enter email"),
     phone: yup.string().required("Enter your phone"),
-    Appoiment_date: yup.string().required("Enter your message").min(6),
+    date: yup.string().required("Enter your message").min(6),
     department: yup.string().required("Enter your department"),
     message: yup.string().required("Enter your message")
   }
@@ -21,7 +21,7 @@ function Appoiment(props) {
     name: '',
     email: '',
     phone: '',
-    Appoiment_date: '',
+    date: '',
     department: '',
     message: '',
   }
@@ -38,7 +38,7 @@ function Appoiment(props) {
     },
   });
 
-  const { handleChange, errors, handleSubmit } = formik;
+  const { handleChange, errors, handleSubmit, touched, handleBlur  } = formik;
 
   return (
     <div>
@@ -51,7 +51,7 @@ function Appoiment(props) {
               Curabitur luctus eleifend odio. Phasellus placerat mi et suscipit pulvinar.</p>
           </div>
           <Formik>
-            <Form action method="post" role="form" className="php-email-form">
+            <Form onSubmit={handleSubmit} action method="post" role="form" className="php-email-form">
               <div className="row">
                 <div className="col-md-4 form-group">
                   <input
@@ -62,8 +62,9 @@ function Appoiment(props) {
                     placeholder="Your Name"
                     data-rule="minlen:4"
                     data-msg="Please enter at least 4 chars"
+                    onBlur={handleBlur}
                     onChange={handleChange} />
-                  <p>{errors.name}</p>
+                  <p>{errors.name && touched.name ? errors.name : ''}</p>
 
                   <div className="validate" />
                 </div>
@@ -76,8 +77,9 @@ function Appoiment(props) {
                     placeholder="Your Email"
                     data-rule="email"
                     data-msg="Please enter a valid email"
+                    onBlur={handleBlur}
                     onChange={handleChange} />
-                  <p>{errors.email}</p>
+                  <p>{errors.email && touched.email ? errors.email : ''}</p>
 
                   <div className="validate" />
                 </div>
@@ -90,8 +92,9 @@ function Appoiment(props) {
                     placeholder="Your Phone"
                     data-rule="minlen:4"
                     data-msg="Please enter at least 4 chars"
+                    onBlur={handleBlur}
                     onChange={handleChange} />
-                  <p>{errors.phone}</p>
+                  <p>{errors.phone && touched.phone ? errors.phone : ''}</p>
 
                   <div className="validate" />
                 </div>
@@ -106,8 +109,9 @@ function Appoiment(props) {
                     placeholder="Appointment Date"
                     data-rule="minlen:4"
                     data-msg="Please enter at least 4 chars"
+                    onBlur={handleBlur}
                     onChange={handleChange} />
-                  <p>{errors.Appoiment_date}</p>
+                  <p>{errors.date && touched.date ? errors.date : ''}</p>
 
                   <div className="validate" />
                 </div>
@@ -116,6 +120,7 @@ function Appoiment(props) {
                     name="department"
                     id="department"
                     className="form-select"
+                    onBlur={handleBlur}
                     onChange={handleChange}
                   >
                     <option value>Select Department</option>
@@ -123,12 +128,14 @@ function Appoiment(props) {
                     <option value="Department 2">Department 2</option>
                     <option value="Department 3">Department 3</option>
                   </select>
-                  <p>{errors.message}</p>
+                  
                   <div className="validate" />
                 </div>
               </div>
               <div className="form-group mt-3">
-                <textarea className="form-control" name="message" rows={5} placeholder="Message (Optional)" defaultValue={""} />
+                <textarea className="form-control" name="message" rows={5} placeholder="Message (Optional)" defaultValue={""} onBlur={handleBlur}
+                    onChange={handleChange}/>
+                <p>{errors.message && touched.message ? errors.message : ''}</p>
                 <div className="validate" />
               </div>
               <div className="mb-3">

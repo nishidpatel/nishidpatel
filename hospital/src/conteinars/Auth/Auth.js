@@ -27,7 +27,7 @@ function Auth(props) {
     if (userType === 'Singup' && reset === false) {
         authschema = {
             name: yup.string().required("please Enter your name"),
-            email: yup.string().required("please Enter valid email").email("please Enter email"),
+            email: yup.string().required("please Enter email").email("please Enter valid email"),
             pssword: yup.string().required("Enter your pssword").min(8)
         }
         
@@ -65,13 +65,12 @@ function Auth(props) {
         initialValues: init,
         validationSchema: schema,
         onSubmit: values => {
-v 
             console.log(values);
 
         },
     });
 
-    const { handleChange, errors, handleSubmit } = formik;
+    const { handleChange, errors, handleSubmit, touched, handleBlur } = formik;
 
     return (
         <section id="appointment" className="appointment">
@@ -91,7 +90,7 @@ v
 
                 </div>
                 <Formik value={formik}>
-                    <Form className="php-email-form">
+                    <Form onSubmit={handleSubmit} className="php-email-form">
 
                         <div className="col-md-4 form-group">
                             {
@@ -108,11 +107,10 @@ v
                                                 name="name"
                                                 className="form-control"
                                                 id="name" placeholder="Your Name"
-                                                data-rule="minlen:4"
-                                                data-msg="Please enter at least 4 chars"
+                                                onBlur={handleBlur}
                                                 onChange={handleChange}/>
 
-                                            <p>{errors.name}</p>
+                                            <p>{errors.name && touched.name ? errors.name : ''}</p>
                                             <div className="validate" />
                                         </div>
                             }
@@ -124,13 +122,14 @@ v
 
                                 <input 
                                     ref={emailRef}
-                                    type="email"
+                                    type="text"
                                     className="form-control"
                                     name="email" id="email"
                                     placeholder="Your Email"
+                                    onBlur={handleBlur}
                                     onChange={handleChange}/>
 
-                                <p>{errors.email}</p>
+                                <p>{errors.email && touched.email ? errors.email : ''}</p>
                                 <div className="validate" />
                             </div>
 
@@ -148,11 +147,10 @@ v
                                             className="form-control"
                                             name="pssword" id="pssword"
                                             placeholder="Your pssword"
-                                            data-rule="minlen:4"
-                                            data-msg="Please enter at least 4 chars"
+                                            onBlur={handleBlur}
                                             onChange={handleChange} />
 
-                                        <p>{errors.pssword}</p>
+                                        <p>{errors.pssword && touched.pssword ? errors.pssword : ''}</p>
                                         <div className="validate" />
                                     </div>
                                 </div>
