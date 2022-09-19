@@ -13,13 +13,15 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Auth from './conteinars/Auth/Auth';
 import Medicine from './conteinars/Medicine/Medicine';
+import Layout from './Admin/conteinars/Layout';
+import MedicineAdmin from './Admin/component/MedicineAdmin';
 
 
 function App() {
   return (
       
       <div>
-        <Header />
+        {/* <Header />
         <Switch>
           <Route exact path={"/"} component={Home}/>
           <Route exact path={"/Departments"} component={Departments}/>
@@ -30,7 +32,13 @@ function App() {
           <Route exact path={"/Appointment"} component={Appoiment} />
           <Route exact path={"/Auth"} component={Auth} />
         </Switch>
-        <Footer />
+        <Footer /> */}
+
+        <Layout>
+          <Switch>
+            <Route exact path={"/Medicineadmin"} component={MedicineAdmin}/>
+          </Switch>
+        </Layout>
       </div>
       
   );
