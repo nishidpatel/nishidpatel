@@ -15,6 +15,7 @@ import Auth from './conteinars/Auth/Auth';
 import Medicine from './conteinars/Medicine/Medicine';
 import Layout from './Admin/conteinars/Layout';
 import MedicineAdmin from './Admin/component/MedicineAdmin';
+import DoctorAdmin from './Admin/component/DoctorAdmin';
 
 
 function App() {
@@ -37,6 +38,8 @@ function App() {
         <Layout>
           <Switch>
             <Route exact path={"/Medicineadmin"} component={MedicineAdmin}/>
+            <Route exact path={"/DoctorAdmin"} component={DoctorAdmin}/>
+            
           </Switch>
         </Layout>
       </div>

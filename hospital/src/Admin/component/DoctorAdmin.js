@@ -4,76 +4,58 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-// import DialogContentText from '@mui/material/DialogContentText';
+import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-function MedicinAdmin(props) {
+
+function DoctorAdmin(props) {
     const [open, setOpen] = React.useState(false);
 
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleClose = () => {
-      setOpen(false);
-    };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
     return (
         <div>
-            <h1>MedicinAdmin</h1>
-
+            <h1>DoctorAdmin</h1>
             <br/>
-
             <div>
-      <Button variant="outlined" onClick={handleClickOpen}>MedicinAdmin</Button>
+      <Button variant="outlined" onClick={handleClickOpen}> Add Doctor</Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>MedicinAdmin</DialogTitle>
+        <DialogTitle>Doctor</DialogTitle>
         <DialogContent>
+          
           <TextField
             autoFocus
             margin="dense"
             id="name"
             name="name"
-            label="Add Medicin"
+            label="Doctor Name"
+            type="text"
             fullWidth
             variant="standard"
           />
           <TextField
             autoFocus
             margin="dense"
-            id="Price"
-            name="Price"
-            label="Price"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="Qnt"
-            name="Qnt"
-            label=" Quntity"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="expiry"
-            name="expiry"
-            label="Expiry"
+            id=""
+            label="Doctor Number "
+            type="text"
             fullWidth
             variant="standard"
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Add Medicin</Button>
+          <Button onClick={handleClose}>Add</Button>
         </DialogActions>
       </Dialog>
     </div>
         </div>
-        
     );
 }
 
-export default MedicinAdmin;
+export default DoctorAdmin;
