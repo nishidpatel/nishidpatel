@@ -19,6 +19,7 @@ function MedicinAdmin(props) {
   const handleClose = () => {
     setOpen(false);
   };
+  
   const handleadd=(values)=>{
     setOpen(false);
     console.log(values);
