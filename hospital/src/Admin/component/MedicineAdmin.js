@@ -19,6 +19,11 @@ function MedicinAdmin(props) {
   const handleClose = () => {
     setOpen(false);
   };
+  const handleadd=(values)=>{
+    setOpen(false);
+    console.log(values);
+    formik.resetForm();
+  }
 
   let schema = yup.object().shape({
     name: yup.string().required("please enter name"),
@@ -38,7 +43,7 @@ function MedicinAdmin(props) {
       expiry: ''
     },
     onSubmit: values => {
-      alert(JSON.stringify(values));
+      handleadd(values);
     },
   });
 
