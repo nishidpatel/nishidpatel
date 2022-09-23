@@ -8,10 +8,22 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import * as yup from 'yup';
 import { Form, Formik, useFormik } from 'formik';
+import { DataGrid } from '@mui/x-data-grid';
+import { useEffect, useState } from 'react';
 
 
 function DoctorsAdmin(props) {
     const [open, setOpen] = React.useState(false);
+    const [data, setData] = useState([]);
+
+    const localData = () => {
+        let localData = JSON.parse(localStorage.getItem('Medicin'));
+        setData(localData);
+    }
+
+    useEffect(() => {
+        localData();
+    })
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -21,7 +33,7 @@ function DoctorsAdmin(props) {
         setOpen(false);
     };
 
-    const handleadd= (values) => {
+    const handleadd = (values) => {
 
         let localData = JSON.parse(localStorage.getItem("Doctor"))
 
@@ -32,17 +44,17 @@ function DoctorsAdmin(props) {
         console.log(localData, data);
 
         if (localData === null) {
-          localStorage.setItem("Doctor", JSON.stringify([data]))
+            localStorage.setItem("Doctor", JSON.stringify([data]))
         } else {
-          localData.push(data);
-          localStorage.setItem("Doctor", JSON.stringify(localData))
+            localData.push(data);
+            localStorage.setItem("Doctor", JSON.stringify(localData))
         }
 
         setOpen(false);
         formik.resetForm();
-      }
-    
-    
+    }
+
+
 
     let schema = yup.object().shape({
 
@@ -59,10 +71,31 @@ function DoctorsAdmin(props) {
         },
 
         onSubmit: values => {
-        handleadd  (values);
+            handleadd(values);
 
         },
     });
+
+
+
+    const columns = [
+        { field: 'name', headerName: 'Name', width: 70 },
+        { field: 'age', headerName: 'Age', width: 130 },
+       
+        
+    ];
+
+    const rows = [
+        { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
+        { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
+        { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
+        { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
+        { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
+        { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
+        { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
+        { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
+        { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+    ];
 
     const { handleChange, handleSubmit, errors, touched, handleBlur } = formik;
 
@@ -76,14 +109,23 @@ function DoctorsAdmin(props) {
                 <Button variant="outlined" onClick={handleClickOpen}>
                     Open form dialog
                 </Button>
+                <div style={{ height: 400, width: '100%' }}>
+                    <DataGrid
+                        rows={data}
+                        columns={columns}
+                        pageSize={5}
+                        rowsPerPageOptions={[5]}
+                        checkboxSelection
+                    />
+                </div>
                 <Dialog open={open} onClose={handleClose}>
                     <DialogTitle>Subscribe</DialogTitle>
-                    <Formik  values={formik}>
-                        <Form  onSubmit={handleSubmit}>
+                    <Formik values={formik}>
+                        <Form onSubmit={handleSubmit}>
                             <DialogContent>
 
                                 <TextField
-                                    
+
                                     margin="dense"
                                     id="name"
                                     name="name"
@@ -95,7 +137,7 @@ function DoctorsAdmin(props) {
                                 />
                                 <p>{errors.name && touched.name ? errors.name : ''}</p>
                                 <TextField
-                                    
+
                                     margin="dense"
                                     id="age"
                                     name="age"
@@ -117,7 +159,7 @@ function DoctorsAdmin(props) {
                     </Formik>
                 </Dialog>
             </div>
-        </div>
+         </div >
 
     );
 }

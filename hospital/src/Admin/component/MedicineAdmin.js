@@ -7,10 +7,21 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import * as yup from 'yup';
 import { Form, Formik, useFormik } from 'formik';
-
+import { DataGrid } from '@mui/x-data-grid';
+import { useEffect, useState } from 'react';
 
 function MedicinAdmin(props) {
   const [open, setOpen] = React.useState(false);
+  const [data,setData] = useState ([]);
+
+  const localData =() => {
+    let localData = JSON.parse(localStorage.getItem('Medicin'));
+    setData(localData);
+  }
+
+  useEffect(() => {
+    localData();
+  })
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -20,21 +31,21 @@ function MedicinAdmin(props) {
     setOpen(false);
   };
 
-  const handleadd=(values)=>{
+  const handleadd = (values) => {
     let localData = JSON.parse(localStorage.getItem("Medicin"))
 
-    let id = Math.floor(Math.random()*1000);
+    let id = Math.floor(Math.random() * 1000);
 
-    let data = {id:id, ...values}
+    let data = { id: id, ...values }
 
-    console.log(localData,data);
+    console.log(localData, data);
 
-    if(localData === null){
-      localStorage.setItem("Medicin",JSON.stringify([data]))
-    }else{
+    if (localData === null) {
+      localStorage.setItem("Medicin", JSON.stringify([data]))
+    } else {
       localData.push(data);
-      localStorage.setItem("Medicin",JSON.stringify(localData))
-      
+      localStorage.setItem("Medicin", JSON.stringify(localData))
+
     }
 
     setOpen(false);
@@ -63,6 +74,39 @@ function MedicinAdmin(props) {
       handleadd(values);
     },
   });
+  
+
+  const columns = [
+    { field: 'id', headerName: 'ID', width: 70 },
+    { field: 'name', headerName: 'Name', width: 130 },
+    { field: 'Price', headerName: 'Price', width: 130 },
+    {
+      field: 'Qnt',
+      headerName: 'Qnatity',
+      type: 'number',
+      width: 90,
+    },
+    {
+      field: 'expiry',
+      headerName: 'Expiry',
+      type: 'number',
+      width: 90,
+    },
+    
+  ];
+
+  const rows = [
+    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
+    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
+    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
+    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
+    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
+    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
+    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
+    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
+    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+  ];
+
 
   const { handleChange, errors, handleSubmit, touched, handleBlur } = formik;
 
@@ -74,6 +118,15 @@ function MedicinAdmin(props) {
 
       <div>
         <Button variant="outlined" onClick={handleClickOpen}>MedicinAdmin</Button>
+        <div style={{ height: 400, width: '100%' }}>
+          <DataGrid
+            rows={data}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+          />
+        </div>
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>MedicinAdmin</DialogTitle>
           <Formik Values={formik}>
