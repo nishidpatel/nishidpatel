@@ -9,27 +9,48 @@ import * as yup from 'yup';
 import { Form, Formik, useFormik } from 'formik';
 import { DataGrid } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 function MedicinAdmin(props) {
   const [open, setOpen] = React.useState(false);
-  const [data,setData] = useState ([]);
+  const [data, setData] = useState([]);
+  const [dopen, setdopen] = React.useState(false);
+  const [did, setdid] = React.useState(false);
 
-  const localData =() => {
+  const localData = () => {
     let localData = JSON.parse(localStorage.getItem('Medicin'));
     setData(localData);
   }
 
   useEffect(() => {
     localData();
-  })
+  },[])
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
+  const handleDelete = (data) => {
+    setdopen(true)
+    setdid(data.id)
+  }
+
+  const handelDeleteData = () =>{
+    let localData = JSON.parse(localStorage.getItem("Medicin"))
+    let Ddata = localData.filter((l) => l.id !== did)
+
+    localStorage.setItem("Medicin",JSON.stringify(Ddata))
+    setData(Ddata)
+    setdopen(false)
+
+    console.log(Ddata);
+  }
   const handleClose = () => {
     setOpen(false);
   };
+  
 
   const handleadd = (values) => {
     let localData = JSON.parse(localStorage.getItem("Medicin"))
@@ -74,7 +95,7 @@ function MedicinAdmin(props) {
       handleadd(values);
     },
   });
-  
+
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -92,19 +113,17 @@ function MedicinAdmin(props) {
       type: 'number',
       width: 90,
     },
-    
-  ];
+    {
+      field: '',
+      headerName: 'Action',
+      width: 90,
+      renderCell: (params) => (
+        <IconButton aria-label="delete" onClick={() => handleDelete(params.row)}>
+        <DeleteIcon />
+      </IconButton>
+      )
+    },
 
-  const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
   ];
 
 
@@ -118,6 +137,7 @@ function MedicinAdmin(props) {
 
       <div>
         <Button variant="outlined" onClick={handleClickOpen}>MedicinAdmin</Button>
+
         <div style={{ height: 400, width: '100%' }}>
           <DataGrid
             rows={data}
@@ -186,6 +206,13 @@ function MedicinAdmin(props) {
               </DialogContent>
             </Form>
           </Formik>
+        </Dialog>
+        <Dialog open={dopen} onClose={handleClose}>
+          <DialogTitle>Delete Medicindata</DialogTitle>
+          <DialogActions>
+            <Button onClick={handleClose}>No</Button>
+            <Button onClick={() => handelDeleteData()}>YES</Button>
+          </DialogActions>
         </Dialog>
       </div>
     </div>
