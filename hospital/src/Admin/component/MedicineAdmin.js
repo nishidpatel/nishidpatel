@@ -11,6 +11,8 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
 
 
 function MedicinAdmin(props) {
@@ -18,6 +20,8 @@ function MedicinAdmin(props) {
   const [data, setData] = useState([]);
   const [dopen, setdopen] = React.useState(false);
   const [did, setdid] = React.useState(false);
+  const [Update,setUpdate]=useState(false)
+
 
   const localData = () => {
     let localData = JSON.parse(localStorage.getItem('Medicin'));
@@ -26,7 +30,7 @@ function MedicinAdmin(props) {
 
   useEffect(() => {
     localData();
-  },[])
+  }, [])
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -37,11 +41,11 @@ function MedicinAdmin(props) {
     setdid(data.id)
   }
 
-  const handelDeleteData = () =>{
+  const handelDeleteData = () => {
     let localData = JSON.parse(localStorage.getItem("Medicin"))
     let Ddata = localData.filter((l) => l.id !== did)
 
-    localStorage.setItem("Medicin",JSON.stringify(Ddata))
+    localStorage.setItem("Medicin", JSON.stringify(Ddata))
     setData(Ddata)
     setdopen(false)
 
@@ -49,8 +53,18 @@ function MedicinAdmin(props) {
   }
   const handleClose = () => {
     setOpen(false);
+    Update(false);
   };
-  
+
+  const handleedit = (data) =>{
+    setOpen(true)
+    console.log(data);
+    formik.setValues(data);
+    setUpdate(true);
+  }
+
+
+
 
   const handleadd = (values) => {
     let localData = JSON.parse(localStorage.getItem("Medicin"))
@@ -60,6 +74,10 @@ function MedicinAdmin(props) {
     let data = { id: id, ...values }
 
     console.log(localData, data);
+
+    
+
+
 
     if (localData === null) {
       localStorage.setItem("Medicin", JSON.stringify([data]))
@@ -118,16 +136,22 @@ function MedicinAdmin(props) {
       headerName: 'Action',
       width: 90,
       renderCell: (params) => (
-        <IconButton aria-label="delete" onClick={() => handleDelete(params.row)}>
-        <DeleteIcon />
-      </IconButton>
+        <>
+          <IconButton aria-label="delete" onClick={() => handleDelete(params.row)}>
+            <DeleteIcon />
+          </IconButton>
+
+          <IconButton aria-label="edit" onClick={() => handleedit(params.row)}>
+            <EditIcon />
+          </IconButton>
+        </>
       )
     },
 
   ];
 
 
-  const { handleChange, errors, handleSubmit, touched, handleBlur } = formik;
+  const { handleChange, errors, handleSubmit, values, touched, handleBlur } = formik;
 
   return (
     <div>
@@ -160,6 +184,7 @@ function MedicinAdmin(props) {
                   label="Add Medicin"
                   fullWidth
                   variant="standard"
+                  value={values.name}
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
@@ -172,6 +197,7 @@ function MedicinAdmin(props) {
                   label="Price"
                   fullWidth
                   variant="standard"
+                  value={values.Price}
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
@@ -184,6 +210,7 @@ function MedicinAdmin(props) {
                   label=" Quntity"
                   fullWidth
                   variant="standard"
+                  value={values.Qnt}
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
@@ -195,13 +222,14 @@ function MedicinAdmin(props) {
                   label="Expiry"
                   fullWidth
                   variant="standard"
+                  value={values.expiry}
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
                 <p>{errors.expiry && touched.expiry ? errors.expiry : ''}</p>
                 <DialogActions>
                   <Button onClick={handleClose}>Cancel</Button>
-                  <Button type="submit">Add Medicin</Button>
+                  <Button type="submit">{Update ? "Update" : "Add"}</Button>
                 </DialogActions>
               </DialogContent>
             </Form>
