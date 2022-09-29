@@ -1,46 +1,79 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-// import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import * as yup from 'yup';
 import { Form, Formik, useFormik } from 'formik';
 import { DataGrid } from '@mui/x-data-grid';
-import { useEffect, useState } from 'react';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ModeIcon from '@mui/icons-material/Mode';
+// import { Update } from '@mui/icons-material';
+// import DialogContentText from '@mui/material/DialogContentText';
 
 
 function DoctorsAdmin(props) {
     const [open, setOpen] = React.useState(false);
     const [data, setData] = useState([]);
+    const [dopen, setdOpen] = React.useState(false);
+    const [did, setdid] = React.useState(false)
+    const [update, setUpdate] = useState()
 
-    const localData = () => {
-        let localData = JSON.parse(localStorage.getItem('Medicin'));
-        setData(localData);
+
+
+    const localDataFun = () => {
+        let localData = JSON.parse(localStorage.getItem("Doctor"));
+        if (localData !== null) {
+            setData(localData);
+          }
+
     }
-
     useEffect(() => {
-        localData();
-    })
+        localDataFun();
+    }, [])
+
 
     const handleClickOpen = () => {
         setOpen(true);
+        setUpdate(false);
+        formik.resetForm();
     };
+
+    const handleDelete = (data) => {
+        setdOpen(true)
+        setdid(data.id)
+    }
+
+    const handleEdit = (data) => {
+        setOpen(true);
+        console.log(data);
+        formik.setValues(data)
+        setUpdate(true);
+    }
+
+    const handleDeleteData = () => {
+
+        let localData = JSON.parse(localStorage.getItem("Doctor"))
+        let Ddata = localData.filter((l) => l.id !== did)
+
+        localStorage.setItem("Doctor", JSON.stringify(Ddata))
+        setData(Ddata)
+        setdOpen(false)
+
+        console.log(Ddata);
+    }
 
     const handleClose = () => {
         setOpen(false);
     };
 
     const handleadd = (values) => {
-
         let localData = JSON.parse(localStorage.getItem("Doctor"))
-
-        let id = Math.floor(Math.random() * 10000);
-
+        let id = Math.floor(Math.random() * 1000);
         let data = { id: id, ...values }
-
         console.log(localData, data);
 
         if (localData === null) {
@@ -49,9 +82,10 @@ function DoctorsAdmin(props) {
             localData.push(data);
             localStorage.setItem("Doctor", JSON.stringify(localData))
         }
-
         setOpen(false);
+
         formik.resetForm();
+        localDataFun()
     }
 
 
@@ -71,25 +105,57 @@ function DoctorsAdmin(props) {
         },
 
         onSubmit: values => {
-            handleadd(values);
+
+            if (update) {
+                handleUpdateData(values);
+              }else{
+                handleadd(values);
+              }
 
         },
     });
 
+    const handleUpdateData = (values) => {
+        const localData = JSON.parse(localStorage.getItem("Doctor"))
+        let uData = localData.map((l) =>{
 
-
-    const columns = [
-        { field: 'name', headerName: 'Name', width: 70 },
-        { field: 'age', headerName: 'Age', type: 'number', width: 130 },
-        
-        
-    ];
-
+          if (l.id == values.id) {
+             return values
+          }else{
+             return l;
+          }
+        })
+    
+         setData(uData);
+         localStorage.setItem("Doctor", JSON.stringify(uData));
+         handleClose();
+      }
     
 
-    const { handleChange, handleSubmit, errors, touched, handleBlur } = formik;
+    const columns = [
+        { field: 'id', headerName: 'ID', width: 70 },
+        { field: 'name', headerName: 'name', width: 130 },
+        { field: 'age', headerName: 'age', width: 130 },
 
+        {
+            field: '',
+            headerName: 'Action',
+            width: 90,
+            renderCell: (params) => (
+                <>
+                    <IconButton aria-label="delete" onClick={() => handleDelete(params.row)}>
+                        <DeleteIcon />
+                    </IconButton>
+                    <IconButton aria-label="Edit" onClick={() => handleEdit(params.row)}>
+                        <ModeIcon />
+                    </IconButton>
+                </>
+            )
+        },
+    ];
+    const { handleChange, handleSubmit, errors, touched, values, handleBlur } = formik;
 
+    console.log(errors, touched);
 
     return (
         <div>
@@ -97,7 +163,7 @@ function DoctorsAdmin(props) {
             <br />
             <div>
                 <Button variant="outlined" onClick={handleClickOpen}>
-                    Open form dialog
+                    open Doctor form
                 </Button>
                 <div style={{ height: 400, width: '100%' }}>
                     <DataGrid
@@ -122,6 +188,7 @@ function DoctorsAdmin(props) {
                                     label="Doctor name"
                                     fullWidth
                                     variant="standard"
+                                    value={values.name}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                 />
@@ -130,28 +197,38 @@ function DoctorsAdmin(props) {
 
                                     margin="dense"
                                     id="age"
-                                    name="Age"
+                                    name="age"
                                     label="Doctor Number"
                                     fullWidth
                                     variant="standard"
+                                    value={values.age}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                 />
                                 <p>{errors.age && touched.age ? errors.age : ''}</p>
                                 <DialogActions>
                                     <Button onClick={handleClose}>Cancel</Button>
-                                    <Button type='submit'>Add</Button>
+                                    <Button type='submit'>{update ? "Update" : "Add"}</Button>
                                 </DialogActions>
                             </DialogContent>
-
-
                         </Form>
                     </Formik>
                 </Dialog>
+                
+                <Dialog open={dopen} onClose={handleClose}>
+                    <DialogTitle>Delete DoctorDate</DialogTitle>
+                    <DialogActions>
+                        <Button onClick={handleClose}>No</Button>
+                        <Button onClick={() => handleDeleteData()}>Yes </Button>
+                    </DialogActions>
+                </Dialog>
+
             </div>
-         </div >
+        </div>
 
     );
 }
+
+
 
 export default DoctorsAdmin;
