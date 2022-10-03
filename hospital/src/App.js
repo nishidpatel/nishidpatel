@@ -16,6 +16,8 @@ import Medicine from './conteinars/Medicine/Medicine';
 import Layout from './Admin/conteinars/Layout';
 import MedicineAdmin from './Admin/component/MedicineAdmin';
 import DoctorAdmin from './Admin/component/DoctorAdmin';
+import Pesant from './Admin/component/Pesant';
+
 
 
 function App() {
@@ -39,6 +41,7 @@ function App() {
           <Switch>
             <Route exact path={"/Medicineadmin"} component={MedicineAdmin}/>
             <Route exact path={"/DoctorAdmin"} component={DoctorAdmin}/>
+            <Route exact path={"/Pesant"} component={Pesant}/>
             
           </Switch>
         </Layout>

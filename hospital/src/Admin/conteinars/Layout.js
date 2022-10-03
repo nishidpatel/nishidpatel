@@ -21,6 +21,10 @@ import MailIcon from '@mui/icons-material/Mail';
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 import { NavLink } from 'react-router-dom';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import AddModeratorIcon from '@mui/icons-material/AddModerator';
+// import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import BloodtypeIcon from '@mui/icons-material/Bloodtype';
+
 
 const drawerWidth = 240;
 
@@ -103,7 +107,11 @@ export default function Layout({children}) {
 
   let MedicineAdmin = [
     { name: 'MedicineAdmin', icon: <MedicalServicesIcon />, to: '/Medicineadmin' },
-    { name: 'DoctorAdmin', icon: <LocalHospitalIcon />, to: '/DoctorAdmin' }
+    { name: 'DoctorAdmin', icon: <LocalHospitalIcon />, to: '/DoctorAdmin' },
+    { name : 'Pesant', icon :<BloodtypeIcon/>, to :'/Pesant' }
+
+
+
 
 ]
 
