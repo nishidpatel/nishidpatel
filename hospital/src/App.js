@@ -24,7 +24,7 @@ function App() {
   return (
       
       <div>
-        {/* <Header />
+        <Header />
         <Switch>
           <Route exact path={"/"} component={Home}/>
           <Route exact path={"/Departments"} component={Departments}/>
@@ -35,16 +35,16 @@ function App() {
           <Route exact path={"/Appointment"} component={Appoiment} />
           <Route exact path={"/Auth"} component={Auth} />
         </Switch>
-        <Footer /> */}
+        <Footer />
 
-        <Layout>
+        {/* <Layout>
           <Switch>
             <Route exact path={"/Medicineadmin"} component={MedicineAdmin}/>
             <Route exact path={"/DoctorAdmin"} component={DoctorAdmin}/>
             <Route exact path={"/Pesant"} component={Pesant}/>
             
           </Switch>
-        </Layout>
+        </Layout> */}
       </div>
       
   );

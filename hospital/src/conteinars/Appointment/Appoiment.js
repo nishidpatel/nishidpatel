@@ -38,7 +38,7 @@ function Appoiment(props) {
     },
   });
 
-  const { handleChange, errors, handleSubmit, touched, handleBlur  } = formik;
+  const { handleChange, errors, handleSubmit,values, touched, handleBlur  } = formik;
 
   return (
     <div>
@@ -63,8 +63,11 @@ function Appoiment(props) {
                     data-rule="minlen:4"
                     data-msg="Please enter at least 4 chars"
                     onBlur={handleBlur}
-                    onChange={handleChange} />
-                  <p>{errors.name && touched.name ? errors.name : ''}</p>
+                    onChange={handleChange}
+                    value={values.name}
+                    
+                    />
+                  <p>{errors.name && touched.name ? <p>{errors.name} </p>: ''}</p>
 
                   <div className="validate" />
                 </div>
@@ -78,8 +81,10 @@ function Appoiment(props) {
                     data-rule="email"
                     data-msg="Please enter a valid email"
                     onBlur={handleBlur}
-                    onChange={handleChange} />
-                  <p>{errors.email && touched.email ? errors.email : ''}</p>
+                    onChange={handleChange} 
+                    value={values.email}
+                    />
+                  <p>{errors.email && touched.email ? <p>{errors.email} </p>: ''}</p>
 
                   <div className="validate" />
                 </div>
@@ -93,8 +98,10 @@ function Appoiment(props) {
                     data-rule="minlen:4"
                     data-msg="Please enter at least 4 chars"
                     onBlur={handleBlur}
-                    onChange={handleChange} />
-                  <p>{errors.phone && touched.phone ? errors.phone : ''}</p>
+                    onChange={handleChange}
+                    value={values.phone} 
+                    />
+                  <p>{errors.phone && touched.phone ? <p>{errors.phone} </p> : ''}</p>
 
                   <div className="validate" />
                 </div>
@@ -110,8 +117,10 @@ function Appoiment(props) {
                     data-rule="minlen:4"
                     data-msg="Please enter at least 4 chars"
                     onBlur={handleBlur}
-                    onChange={handleChange} />
-                  <p>{errors.date && touched.date ? errors.date : ''}</p>
+                    onChange={handleChange} 
+                    value={values.date} 
+                    />
+                  <p>{errors.date && touched.date ? <p>{errors.date} </p> : ''}</p>
 
                   <div className="validate" />
                 </div>
@@ -122,6 +131,7 @@ function Appoiment(props) {
                     className="form-select"
                     onBlur={handleBlur}
                     onChange={handleChange}
+                    value={values.department}
                   >
                     <option value>Select Department</option>
                     <option value="Department 1">Department 1</option>
@@ -134,7 +144,7 @@ function Appoiment(props) {
               </div>
               <div className="form-group mt-3">
                 <textarea className="form-control" name="message" rows={5} placeholder="Message (Optional)" defaultValue={""} onBlur={handleBlur}
-                    onChange={handleChange}/>
+                    onChange={handleChange} value={values.message} />
                 <p>{errors.message && touched.message ? errors.message : ''}</p>
                 <div className="validate" />
               </div>
