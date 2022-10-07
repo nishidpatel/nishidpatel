@@ -26,7 +26,7 @@ function Appoiment(props) {
     //   .required(),
     date: yup.string().required("Please Enter Date.").matches(/^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/, "Enter Date in Format."),
     department: yup.string().required("Enter your department"),
-    message: yup.string().required("Enter your message"),
+    message: yup.string().required("Enter your message").min(2).max(50),
     Hobby: yup.array().min(1).of(yup.string().required()).required(),
     Gender: yup.string().required("Enter your Gender"),
   }
@@ -172,6 +172,7 @@ function Appoiment(props) {
                   onChange={handleChange} value={values.message}
 
                 />
+                <p>{errors.message && touched.message ? <p>{errors.message} </p> : ''}</p>
                 </div>
 
                 <div>
