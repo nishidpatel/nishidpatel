@@ -1,8 +1,6 @@
 // import logo from './logo.svg';
 // import './App.css';
-
 import Departments from './conteinars/Departments/Departments';
-
 import Home from './conteinars/Home/Home';
 import About from './conteinars/About/About';
 import Doctors from './conteinars/Doctors/Doctors';
