@@ -20,10 +20,11 @@ function Appoiment(props) {
       ),
     email: yup.string().required("please Enter valid email").email("please Enter email"),
     phone: yup.string().matches(phoneRegExp, 'Phone number is not valid').min(10).max(10),
-    date: yup.string().required("Enter your date")
-      .min(new Date('01-01-2020'))
-      .max(new Date())
-      .required(),
+    // date: yup.string().required("Enter your date")
+    //   .min(new Date('01-01-2019'))
+    //   .max(new Date())
+    //   .required(),
+    date: yup.string().required("Please Enter Date.").matches(/^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/, "Enter Date in Format."),
     department: yup.string().required("Enter your department"),
     message: yup.string().required("Enter your message"),
     Hobby: yup.array().min(1).of(yup.string().required()).required(),
@@ -82,6 +83,7 @@ function Appoiment(props) {
                     value={values.name}
 
                   />
+
                   <p>{errors.name && touched.name ? <p>{errors.name} </p> : ''}</p>
 
                   <div className="validate" />
