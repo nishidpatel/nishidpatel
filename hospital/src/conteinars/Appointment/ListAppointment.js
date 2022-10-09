@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, CardBody, CardSubtitle, CardText, CardTitle } from 'reactstrap';
+import { Button, Card, CardBody, CardSubtitle,  CardTitle, CardText} from 'reactstrap';
 
 
 function ListAppointment(props) {
+
     const [data, setData] = useState([]);
 
     const getData = () => {
         let localData = JSON.parse(localStorage.getItem("apt"));
-
-        // console.log(localData);
         setData(localData);
     }
-
+    
     useEffect(() => {
         getData();
     }, [])
+
 
     return (
         <div>
@@ -38,6 +38,7 @@ function ListAppointment(props) {
                                     <b>phone:</b>{d.phone}<br/>
                                     <b>date:</b>{d.date}
                                 </CardSubtitle>
+                                <br></br>
                             </CardBody>
                         </Card>
                     </div>
