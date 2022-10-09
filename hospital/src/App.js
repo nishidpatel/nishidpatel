@@ -15,6 +15,7 @@ import Layout from './Admin/conteinars/Layout';
 import MedicineAdmin from './Admin/component/MedicineAdmin';
 import DoctorAdmin from './Admin/component/DoctorAdmin';
 import Pesant from './Admin/component/Pesant';
+import ListAppointment from './conteinars/Appointment/ListAppointment';
 
 
 
@@ -32,6 +33,7 @@ function App() {
           <Route exact path={"/Contact"} component={contact}/>
           <Route exact path={"/Appointment"} component={Appoiment} />
           <Route exact path={"/Auth"} component={Auth} />
+          <Route exact path={"/ListAppointment"} component={ListAppointment} />
         </Switch>
         <Footer />
 
