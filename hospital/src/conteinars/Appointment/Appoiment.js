@@ -1,17 +1,32 @@
-import React from 'react';
+
 import { date } from 'yup';
 import * as yup from 'yup';
 import { Form, Formik, useFormik } from 'formik';
 import { useHistory } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 
 function Appoiment(props) {
+
+  const [usedata, setusedata] = useState(false);
+
+  useEffect(() =>{
+    console.log(props.location.state);
+
+    if(props.location.state !== null){
+      formik.setValues(props.location.state);
+      setusedata(true);
+    }
+
+  },[])
+
   const history = useHistory();
 
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
 
   let consschema, init;
+
 
   consschema = {
     name: yup.string().required("please Enter your name")
@@ -30,22 +45,22 @@ function Appoiment(props) {
     Gender: yup.string().required("Enter your Gender"),
   }
 
-  const handleadd = ()=> {
+  const handleadd = () => {
     let localdata = JSON.parse(localStorage.getItem("apt"));
     // console.log(localdata);
-    let id = Math.floor(Math.random() * 100);
+    let id = Math.floor(Math.random() * 1000);
 
-    if(localdata === null){
-        localStorage.setItem("apt", JSON.stringify([{"id": id , ...values}]));
-    }else{
-        localdata.push({"id": id , ...values});
-        localStorage.setItem("apt", JSON.stringify(localdata));
+    if (localdata === null) {
+      localStorage.setItem("apt", JSON.stringify([{ "id": id, ...values }]));
+    } else {
+      localdata.push({ "id": id, ...values });
+      localStorage.setItem("apt", JSON.stringify(localdata));
     }
     formik.resetForm();
 
     history.push("/listappointment");
-}
- 
+  }
+
 
   init = {
     name: '',
@@ -187,46 +202,46 @@ function Appoiment(props) {
 
                 />
                 <p>{errors.message && touched.message ? <p>{errors.message} </p> : ''}</p>
-                </div>
+              </div>
 
-                <div>
-                  <label><b>Gender:-</b></label>
-                  <label><input type="radio" name="Gender" onBlur={handleBlur} onChange={handleChange}></input>Male</label>
-                  <label><input type="radio" name="Gender" onBlur={handleBlur} onChange={handleChange}></input>Femel</label>
-                  <label><input type="radio" name="Gender" onBlur={handleBlur} onChange={handleChange}></input>Other</label>
+              <div>
+                <label><b>Gender:-</b></label>
+                <label><input type="radio" name="Gender" checked={values.Gender === "Male"} onBlur={handleBlur} onChange={handleChange}></input>Male</label>
+                <label><input type="radio" name="Gender" checked={values.Gender === "Femel"} onBlur={handleBlur} onChange={handleChange}></input>Femel</label>
+                <label><input type="radio" name="Gender" checked={values.Gender === "Other"} onBlur={handleBlur} onChange={handleChange}></input>Other</label>
 
-                  <p>{errors.Gender && touched.Gender ? <p>{errors.Gender}</p> : ''}</p>
+                <p>{errors.Gender && touched.Gender ? <p>{errors.Gender}</p> : ''}</p>
 
-                </div>
+              </div>
 
-                <div className="text-center">
-                  <>
-                    <label><b>Hobby:-</b></label><br />
-                    <input
-                      type="checkbox" name="Hobby"
-                      value={"cricket"} onBlur={handleBlur} onChange={handleChange} />
-                    <label
-                      htmlFor="cricket">cricket</label>
-                    
-                    <input type="checkbox" name="Hobby" value={"Traveling"} onBlur={handleBlur} onChange={handleChange} />
-                    <label htmlFor="Traveling">Traveling</label>
+              <div className="text-center">
+                <>
+                  <label><b>Hobby:-</b></label><br />
+                  <input
+                    type="checkbox" name="Hobby"
+                    value={"cricket"} onBlur={handleBlur} onChange={handleChange} />
+                  <label
+                    htmlFor="cricket">cricket</label>
 
-                    <input type="checkbox" name="Hobby" value={"Reading"} onBlur={handleBlur} onChange={handleChange} />
-                    <label htmlFor="Reading">Reading</label>
-                     
-                    <input type="checkbox" name="Hobby" value={"Music"} onBlur={handleBlur} onChange={handleChange} />
-                    <label >Music</label>
+                  <input type="checkbox" name="Hobby" value={"Traveling"} onBlur={handleBlur} onChange={handleChange} />
+                  <label htmlFor="Traveling">Traveling</label>
 
-                  </>
-                  <p>{errors.Hobby && touched.Hobby ? <p>{errors.Hobby}</p> : ''}</p>
-                </div>
+                  <input type="checkbox" name="Hobby" value={"Reading"} onBlur={handleBlur} onChange={handleChange} />
+                  <label htmlFor="Reading">Reading</label>
 
-                <div className="mb-3">
-                  <div className="loading">Loading</div>
-                  <div className="error-message" />
-                  <div className="sent-message">Your appointment request has been sent successfully. Thank you!</div>
-                </div>
-                <div className="text-center"><button type="submit">Make an Appointment</button></div>
+                  <input type="checkbox" name="Hobby" value={"Music"} onBlur={handleBlur} onChange={handleChange} />
+                  <label >Music</label>
+
+                </>
+                <p>{errors.Hobby && touched.Hobby ? <p>{errors.Hobby}</p> : ''}</p>
+              </div>
+
+              <div className="mb-3">
+                <div className="loading">Loading</div>
+                <div className="error-message" />
+                <div className="sent-message">Your appointment request has been sent successfully. Thank you!</div>
+              </div>
+              <div className="text-center"><button type="submit">{usedata ? "Update an Appointment" : "Make an Appointment"}</button></div>
             </Form>
           </Formik>
         </div>

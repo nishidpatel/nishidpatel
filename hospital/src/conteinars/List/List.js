@@ -6,29 +6,29 @@ function List({ Data }) {
 
             {Data.map((d, i) => {
                 return (
-                <div className='col-md-4'>
-                <Card
-                    style={{
-                        width: '18rem'                                                          
-                    }}                                          
-                >
-                    <CardBody>
-                        <CardTitle tag="h5">
-                            {d.name}
-                            
-                        </CardTitle>
-                        <CardSubtitle
-                            className="mb-2 text-muted"
-                            tag="h6"
+                    <div className='col-md-4'>
+                        <Card
+                            style={{
+                                width: '18rem'
+                            }}
                         >
-                            price={d.price}<br/>
-                            
+                            <CardBody>
+                                <CardTitle tag="h5">
+                                    {d.name}
+
+                                </CardTitle>
+                                <CardSubtitle
+                                    className="mb-2 text-muted"
+                                    tag="h6"
+                                >
+                                    price={d.price}<br />
 
 
 
-                        </CardSubtitle>
-                    </CardBody>
-                </Card></div>)
+
+                                </CardSubtitle>
+                            </CardBody>
+                        </Card></div>)
             })}
         </div>
     );

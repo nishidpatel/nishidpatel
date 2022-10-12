@@ -30,7 +30,7 @@ function Auth(props) {
             email: yup.string().required("please Enter email").email("please Enter valid email"),
             pssword: yup.string().required("Enter your pssword").min(8)
         }
-        
+
         init = {
             name: '',
             email: '',
@@ -61,7 +61,7 @@ function Auth(props) {
     let schema = yup.object().shape(authschema);
 
     const formik = useFormik({
-        
+
         initialValues: init,
         validationSchema: schema,
         onSubmit: values => {
@@ -108,7 +108,7 @@ function Auth(props) {
                                                 className="form-control"
                                                 id="name" placeholder="Your Name"
                                                 onBlur={handleBlur}
-                                                onChange={handleChange}/>
+                                                onChange={handleChange} />
 
                                             <p>{errors.name && touched.name ? errors.name : ''}</p>
                                             <div className="validate" />
@@ -120,14 +120,14 @@ function Auth(props) {
                         <div className="row">
                             <div className="col-md-4 form-group mt-3 mt-md-0">
 
-                                <input 
+                                <input
                                     ref={emailRef}
                                     type="text"
                                     className="form-control"
                                     name="email" id="email"
                                     placeholder="Your Email"
                                     onBlur={handleBlur}
-                                    onChange={handleChange}/>
+                                    onChange={handleChange} />
 
                                 <p>{errors.email && touched.email ? errors.email : ''}</p>
                                 <div className="validate" />
@@ -141,7 +141,7 @@ function Auth(props) {
                                 <div className="row">
                                     <div className="col-md-4 form-group mt-3 mt-md-0">
 
-                                        <input 
+                                        <input
                                             ref={passRef}
                                             type="tel"
                                             className="form-control"

@@ -17,13 +17,22 @@ function ListAppointment(props) {
     useEffect(() => {
         getData();
     }, [])
+    
 
-    const handledelete =(id) => {
+    const handledelete = (id) => {
         let localdata = JSON.parse(localStorage.getItem("apt"));
-        let data = localdata.filter ((l) => l.id !== id);
-        console.log(localdata,id);
+        let data = localdata.filter((l) => l.id !== id);
+        console.log(localdata, id);
         localStorage.setItem("apt", JSON.stringify(data));
         history.push("Appointment")
+    }
+
+    
+    const handlededit = (data) => {
+        console.log(data);
+
+        history.push("Appointment",data)
+
     }
 
 
@@ -47,12 +56,12 @@ function ListAppointment(props) {
                                         tag="h6"
                                     >
                                         <b>phone:</b>{d.phone}<br />
-                                        <b>date:</b>{d.date}<br/>
+                                        <b>date:</b>{d.date}<br />
                                         <b>Email:</b>{d.email}<br />
                                         {d.department}<br />
                                         {d.Gender}<br />
                                         {d.Hobby}<br />
-                                        <button>Edit</button>
+                                        <button onClick={() => handlededit(d)}>Edit</button>
                                         <button onClick={() => handledelete(d.id)}>Delete</button>
                                     </CardSubtitle>
                                     <br></br>

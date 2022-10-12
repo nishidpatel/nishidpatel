@@ -6,7 +6,7 @@ import About from './conteinars/About/About';
 import Doctors from './conteinars/Doctors/Doctors';
 import contact from './conteinars/Contact/Contact';
 import Appoiment from './conteinars/Appointment/Appoiment';
-import { Route,Switch} from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Auth from './conteinars/Auth/Auth';
@@ -21,23 +21,23 @@ import ListAppointment from './conteinars/Appointment/ListAppointment';
 
 function App() {
   return (
-      
-      <div>
-        <Header />
-        <Switch>
-          <Route exact path={"/"} component={Home}/>
-          <Route exact path={"/Departments"} component={Departments}/>
-          <Route exact path={"/About"} component={About}/>
-          <Route exact path={"/Doctors"} component={Doctors}/>
-          <Route exact path={"/Medicine"} component={Medicine}/>
-          <Route exact path={"/Contact"} component={contact}/>
-          <Route exact path={"/Appointment"} component={Appoiment} />
-          <Route exact path={"/Auth"} component={Auth} />
-          <Route exact path={"/ListAppointment"} component={ListAppointment} />
-        </Switch>
-        <Footer />
 
-        {/* <Layout>
+    <div>
+      <Header />
+      <Switch>
+        <Route exact path={"/"} component={Home} />
+        <Route exact path={"/Departments"} component={Departments} />
+        <Route exact path={"/About"} component={About} />
+        <Route exact path={"/Doctors"} component={Doctors} />
+        <Route exact path={"/Medicine"} component={Medicine} />
+        <Route exact path={"/Contact"} component={contact} />
+        <Route exact path={"/Appointment"} component={Appoiment} />
+        <Route exact path={"/Auth"} component={Auth} />
+        <Route exact path={"/ListAppointment"} component={ListAppointment} />
+      </Switch>
+      <Footer />
+
+      {/* <Layout>
           <Switch>
             <Route exact path={"/Medicineadmin"} component={MedicineAdmin}/>
             <Route exact path={"/DoctorAdmin"} component={DoctorAdmin}/>
@@ -45,8 +45,8 @@ function App() {
             
           </Switch>
         </Layout> */}
-      </div>
-      
+    </div>
+
   );
 }
 
