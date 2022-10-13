@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Card, CardBody, CardSubtitle, CardTitle, CardText } from 'reactstrap';
+import {NavLink} from 'react-router-dom'
 
 
 function ListAppointment(props) {
@@ -17,7 +18,7 @@ function ListAppointment(props) {
     useEffect(() => {
         getData();
     }, [])
-    
+
 
     const handledelete = (id) => {
         let localdata = JSON.parse(localStorage.getItem("apt"));
@@ -27,17 +28,22 @@ function ListAppointment(props) {
         history.push("Appointment")
     }
 
-    
+
     const handlededit = (data) => {
         console.log(data);
 
-        history.push("Appointment",data)
+        history.push("Appointment", data)
 
     }
 
 
     return (
         <div>
+            <div>
+                <div>
+                    <NavLink to={"/Appointment"}>Appointment</NavLink>
+                </div>
+            </div><br />
             <div className='row'>
                 {
                     data.map((d, i) => (

@@ -1,26 +1,26 @@
-
 import { date } from 'yup';
 import * as yup from 'yup';
 import { Form, Formik, useFormik } from 'formik';
-import { useHistory } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { setUpdate, Update } from '@mui/icons-material';
 
 
 function Appoiment(props) {
 
   const [usedata, setusedata] = useState(false);
 
-  useEffect(() =>{
+  const history = useHistory();
+
+  useEffect(() => {
     console.log(props.location.state);
 
-    if(props.location.state !== null){
+    if (props.location.state !== null) {
+      console.log(props.location.state);
       formik.setValues(props.location.state);
       setusedata(true);
     }
-
-  },[])
-
-  const history = useHistory();
+  }, [])
 
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
@@ -61,6 +61,24 @@ function Appoiment(props) {
     history.push("/listappointment");
   }
 
+  const Updatedata = (data) => {
+    const localdata = JSON.parse(localStorage.getItem("apt"));
+
+    let uData = localdata.map((l) => {
+
+      if (l.id == data.id) {
+        return data;
+      } else {
+        return l;
+      }
+    })
+
+    localdata.setItem("apt", JSON.stringify(uData));
+    history.replace();
+    setusedata(false);
+    history.push("/listappointment")
+  }
+
 
   init = {
     name: '',
@@ -69,8 +87,8 @@ function Appoiment(props) {
     date: '',
     department: '',
     message: '',
-    Hobby: '',
     Gender: '',
+    Hobby: [],
   }
 
   let schema = yup.object().shape(consschema);
@@ -80,7 +98,12 @@ function Appoiment(props) {
     initialValues: init,
     validationSchema: schema,
     onSubmit: values => {
-      handleadd(values);
+      if (Update) {
+        Updatedata(values);
+      } else {
+        handleadd(values);
+      }
+
     },
   });
 
@@ -96,6 +119,11 @@ function Appoiment(props) {
               blandit quam volutpat sollicitudin. Fusce tincidunt sit amet ex in volutpat. Donec lacinia finibus tortor.
               Curabitur luctus eleifend odio. Phasellus placerat mi et suscipit pulvinar.</p>
           </div>
+        <div>
+          <div>
+            <NavLink to={"/ListAppointment"}>ListAppointment</NavLink>
+          </div>
+        </div><br/>
           <Formik>
             <Form onSubmit={handleSubmit} action method="post" role="form" className="php-email-form">
               <div className="row">
@@ -206,9 +234,9 @@ function Appoiment(props) {
 
               <div>
                 <label><b>Gender:-</b></label>
-                <label><input type="radio" name="Gender" checked={values.Gender === "Male"} onBlur={handleBlur} onChange={handleChange}></input>Male</label>
-                <label><input type="radio" name="Gender" checked={values.Gender === "Femel"} onBlur={handleBlur} onChange={handleChange}></input>Femel</label>
-                <label><input type="radio" name="Gender" checked={values.Gender === "Other"} onBlur={handleBlur} onChange={handleChange}></input>Other</label>
+                <input type="radio" name="Gender" value={"Male"} checked={values.Gender === "Male"} onBlur={handleBlur} onChange={handleChange}></input>Male
+                <input type="radio" name="Gender" value={"Femel"} checked={values.Gender === "Femel"} onBlur={handleBlur} onChange={handleChange}></input>Femel
+                <input type="radio" name="Gender" value={"Other"} checked={values.Gender === "Other"} onBlur={handleBlur} onChange={handleChange}></input>Other
 
                 <p>{errors.Gender && touched.Gender ? <p>{errors.Gender}</p> : ''}</p>
 
@@ -217,20 +245,17 @@ function Appoiment(props) {
               <div className="text-center">
                 <>
                   <label><b>Hobby:-</b></label><br />
-                  <input
-                    type="checkbox" name="Hobby"
-                    value={"cricket"} onBlur={handleBlur} onChange={handleChange} />
-                  <label
-                    htmlFor="cricket">cricket</label>
+                  <input type="checkbox" name="Hobby" value={"cricket"} checked={values.Hobby.some((h) => h === "cricket")} onBlur={handleBlur} onChange={handleChange} />cricket
 
-                  <input type="checkbox" name="Hobby" value={"Traveling"} onBlur={handleBlur} onChange={handleChange} />
-                  <label htmlFor="Traveling">Traveling</label>
 
-                  <input type="checkbox" name="Hobby" value={"Reading"} onBlur={handleBlur} onChange={handleChange} />
-                  <label htmlFor="Reading">Reading</label>
+                  <input type="checkbox" name="Hobby" value={"Traveling"} checked={values.Hobby.some((h) => h === "Traveling")} onBlur={handleBlur} onChange={handleChange} />Traveling
 
-                  <input type="checkbox" name="Hobby" value={"Music"} onBlur={handleBlur} onChange={handleChange} />
-                  <label >Music</label>
+
+                  <input type="checkbox" name="Hobby" value={"Reading"} checked={values.Hobby.some((h) => h === "Reading")} onBlur={handleBlur} onChange={handleChange} />Reading
+
+
+                  <input type="checkbox" name="Hobby" value={"Music"} checked={values.Hobby.some((h) => h === "checkbox")} onBlur={handleBlur} onChange={handleChange} />Music
+
 
                 </>
                 <p>{errors.Hobby && touched.Hobby ? <p>{errors.Hobby}</p> : ''}</p>
