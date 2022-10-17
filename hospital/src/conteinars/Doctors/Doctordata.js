@@ -4,9 +4,7 @@ import React, { useEffect, useState } from 'react';
 function Doctordata(props) {
 
     const [Data, setData] = useState('');
-
     let orgdata = props.location.state
-
     console.log(orgdata);
 
     const orgData = [

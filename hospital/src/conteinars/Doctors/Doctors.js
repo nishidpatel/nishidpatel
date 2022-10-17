@@ -2,6 +2,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 function Doctors(props) {
 
+
+
   const orgData = [
     {
       id: 100,
@@ -38,6 +40,9 @@ function Doctors(props) {
   ]
 
   return (
+
+
+
     <div>
       {
         orgData.map((d, i) => (
@@ -75,6 +80,8 @@ function Doctors(props) {
     </div>
   )
 }
+
+
 
 export default Doctors;
 
