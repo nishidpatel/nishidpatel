@@ -16,6 +16,7 @@ import MedicineAdmin from './Admin/component/MedicineAdmin';
 import DoctorAdmin from './Admin/component/DoctorAdmin';
 import Pesant from './Admin/component/Pesant';
 import ListAppointment from './conteinars/Appointment/ListAppointment';
+import Doctordata from './conteinars/Doctors/Doctordata';
 
 
 
@@ -34,6 +35,7 @@ function App() {
         <Route exact path={"/Appointment"} component={Appoiment} />
         <Route exact path={"/Auth"} component={Auth} />
         <Route exact path={"/ListAppointment"} component={ListAppointment} />
+        <Route exact path={"/Doctordata"} component={Doctordata} />
       </Switch>
       <Footer />
 
